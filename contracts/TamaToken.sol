@@ -50,6 +50,21 @@ contract TamaToken is ERC721, Ownable {
         return tamas;
     }
 
+    function getOwnerTamas(address _owner) 
+    public view returns(Tama[] memory) {
+        Tama[] memory result = new Tama[](balanceOf(_owner));
+        uint256 counter = 0;
+        
+        for(uint256 i = 0; i < tamas.length; i++) {
+            if(ownerOf(i) == _owner ) {
+                result[counter] = tamas[i];
+                counter++;
+            }
+        }
+
+        return result;
+    }
+
 
     // Helpers
     function _generateNumber(uint256 _mod) internal view returns(uint256) {

@@ -1,33 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useEffect } from 'react'
+// import './App.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { connect } from './redux/blockchain/blockchainActions'
+import { fetchData } from './redux/data/dataActions'
+import * as s from "./styles/globalStyles"
 
 function App() {
-  const [count, setCount] = useState(0)
+  const dispatch = useDispatch()
+  const blockchain = useSelector((state) => state.blockchain)
+  const data = useSelector((state) => state.data)
+
+  console.table(blockchain)
+  console.log(data)
+
+  const mintNFT = (_account, _name) => {
+    if(_account) {
+      console.log(_account)
+    }
+    blockchain.tamaToken.methods.createRandomTama(_name).send({ from: _account, value: 10000000000000000000 })
+    .once("error", (error) => {
+      console.log(error)
+    }).then((receipt) => {
+      console.log(receipt)
+      dispatch(fetchData(blockchain.account))
+    })
+  }
+
+  useEffect(() => {
+    if(blockchain.account != "" && blockchain.tamaToken != null) {
+      dispatch(fetchData(blockchain.account))
+    }
+  }, [blockchain.tamaToken])
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <s.Screen>
+      {blockchain.account == "" || blockchain.tamaToken === null ? (
+        <s.Container flex={1} ai={"center"} jc={"center"}>
+          <s.TextTitle>Dragsters Game</s.TextTitle>
+          <s.SpacerSmall />
+          {/* <p>Account: {blockchain.account}</p> */}
+          <button onClick={(e) => {
+            e.preventDefault()
+            dispatch(connect())
+          }}>connect</button>
+        </s.Container>
+      ) : (
+        <s.Container  flex={1} ai={"center"} jc={"center"}>
+          <s.TextTitle>Welcome</s.TextTitle>
+          <s.SpacerSmall />
+          <button onClick={(e) => {
+            e.preventDefault()
+            mintNFT(blockchain.account, "Joris")
+          }}>Create NEW Tama NFT</button>
+        </s.Container>
+      )}
+    </s.Screen>
   )
 }
 
