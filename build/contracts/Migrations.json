@@ -12,8 +12,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -26,8 +25,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -671,7 +669,7 @@
   "sourceMap": "66:350:11:-:0;;;90:33;;;-1:-1:-1;;;;;;90:33:11;113:10;90:33;;;66:350;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "66:350:11:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;127:36;;;;;;;;;160:25:13;;;148:2;133:18;127:36:11;;;;;;;;90:33;;;;;-1:-1:-1;;;;;90:33:11;;;;;;-1:-1:-1;;;;;360:32:13;;;342:51;;330:2;315:18;90:33:11;196:203:13;311:103:11;;;;;;:::i;:::-;;:::i;:::-;;;225:5;;-1:-1:-1;;;;;225:5:11;211:10;:19;196:99;;;;-1:-1:-1;;;196:99:11;;791:2:13;196:99:11;;;773:21:13;830:2;810:18;;;803:30;869:34;849:18;;;842:62;-1:-1:-1;;;920:18:13;;;913:47;977:19;;196:99:11;;;;;;;;373:24:::1;:36:::0;311:103::o;404:180:13:-;463:6;516:2;504:9;495:7;491:23;487:32;484:52;;;532:1;529;522:12;484:52;-1:-1:-1;555:23:13;;404:180;-1:-1:-1;404:180:13:o",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.9.0;\n\ncontract Migrations {\n  address public owner = msg.sender;\n  uint public last_completed_migration;\n\n  modifier restricted() {\n    require(\n      msg.sender == owner,\n      \"This function is restricted to the contract owner\"\n    );\n    _;\n  }\n\n  function setCompleted(uint completed) public restricted {\n    last_completed_migration = completed;\n  }\n}\n",
-  "sourcePath": "C:\\development\\projects\\tama\\contracts\\Migrations.sol",
+  "sourcePath": "C:\\development\\tama\\contracts\\Migrations.sol",
   "ast": {
     "absolutePath": "project:/contracts/Migrations.sol",
     "exportedSymbols": {
@@ -1088,8 +1086,7 @@
     }
   },
   "schemaVersion": "3.4.11",
-  "updatedAt": "2023-01-02T00:56:30.921Z",
-  "networkType": "ethereum",
+  "updatedAt": "2023-01-02T16:23:57.212Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
