@@ -10,7 +10,7 @@ contract TamaToken is ERC721, Ownable {
         ERC721(_name, _symbol)
     {}
 
-    uint256 COUNTER = 1;
+    uint256 COUNTER = 0;
 
     uint256 fee = 1 ether;
 
@@ -22,8 +22,8 @@ contract TamaToken is ERC721, Ownable {
         uint8 rarity;
     }
 
-    // Tama[] tamas;
-    mapping(address => Tama[]) tamas;
+    Tama[] tamas;
+    // mapping(address => Tama[]) tamas;
 
     event NewTamaEvent(address indexed owner, uint256 id, uint256 dna);
 
@@ -32,8 +32,8 @@ contract TamaToken is ERC721, Ownable {
     function _createTama(string memory _name) internal {
         uint256 randomDna = _generateNumber(10**16);
         Tama memory newTama = Tama(_name, COUNTER, randomDna, 1, 1);
-        // tamas.push(newTama);
-        tamas[msg.sender].push(newTama);
+        tamas.push(newTama);
+        // tamas[msg.sender].push(newTama);
         _safeMint(msg.sender, COUNTER);
         emit NewTamaEvent(msg.sender, COUNTER, randomDna);
         COUNTER++;
@@ -46,25 +46,25 @@ contract TamaToken is ERC721, Ownable {
 
 
     // Getters
-    // function getTamas() 
-    // public view returns(Tama[] memory) {
-    //     return tamas;
-    // }
+    function getTamas() 
+    public view returns(Tama[] memory) {
+        return tamas;
+    }
 
     function getOwnerTamas(address _owner) 
     public view returns(Tama[] memory) {
-         return tamas[_owner];
-        // Tama[] memory result = new Tama[](balanceOf(_owner));
-        // uint256 counter = 0;
+        //  return tamas[_owner];
+        Tama[] memory result = new Tama[](balanceOf(_owner));
+        uint256 counter = 0;
         
-        // for(uint256 i = 0; i < tamas.length; i++) {
-        //     if(ownerOf(i) == _owner ) {
-        //         result[counter] = tamas[i];
-        //         counter++;
-        //     }
-        // }
+        for(uint256 i = 0; i < tamas.length; i++) {
+            if(ownerOf(i) == _owner ) {
+                result[counter] = tamas[i];
+                counter++;
+            }
+        }
 
-        // return result;
+        return result;
     }
 
 
