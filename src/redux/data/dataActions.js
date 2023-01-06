@@ -26,10 +26,10 @@ export const fetchData = (account) => {
         dispatch(fetchDataRequest());
         console.log("account: "+account)
         try {
-            // let allTamas = await store
-            //     .getState()
-            //     .blockchain.tamaToken.methods.getTamas()
-            //     .call();
+            let allTamas = await store
+                .getState()
+                .blockchain.tamaToken.methods.getTamas()
+                .call();
 
             let allOwnerTamas = await store
                 .getState()
@@ -38,7 +38,7 @@ export const fetchData = (account) => {
 
             dispatch(
                 fetchDataSuccess({
-                    // allTamas,
+                    allTamas,
                     allOwnerTamas,
                 })
             );

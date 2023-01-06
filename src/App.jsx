@@ -53,7 +53,6 @@ function App() {
           <s.Container fd={"row"} jc={"space-evenly"} style={{flexWrap: "wrap"}}>
             {data.allOwnerTamas.map((tama) => {
               return (
-                <>
                   <s.Container key={tama.id}>
                     <s.TextDescription>ID: {tama.id}</s.TextDescription>
                     <s.TextDescription>NAME: {tama.name}</s.TextDescription>
@@ -61,8 +60,6 @@ function App() {
                     <s.TextDescription>LEVEL: {tama.level}</s.TextDescription>
                     <s.TextDescription>RARITY: {tama.rarity}</s.TextDescription>
                   </s.Container>
-                  
-                </>
               )
             })}
           </s.Container>
