@@ -10,9 +10,9 @@ contract TamaToken is ERC721, Ownable {
         ERC721(_name, _symbol)
     {}
 
-    uint256 COUNTER = 0;
+    uint256 COUNTER;
 
-    uint256 fee = 1 ether;
+    uint256 fee = 0.01 ether;
 
     struct Tama {
         string name;
@@ -31,7 +31,8 @@ contract TamaToken is ERC721, Ownable {
     // Creation 
     function _createTama(string memory _name) internal {
         uint256 randomDna = _generateNumber(10**16);
-        Tama memory newTama = Tama(_name, COUNTER, randomDna, 1, 1);
+        uint8 randomRarity = uint8(_generateNumber(100));
+        Tama memory newTama = Tama(_name, COUNTER, randomDna, 1, randomRarity);
         tamas.push(newTama);
         // tamas[msg.sender].push(newTama);
         _safeMint(msg.sender, COUNTER);
@@ -81,5 +82,15 @@ contract TamaToken is ERC721, Ownable {
     function withdraw() external payable onlyOwner() {
         address payable _owner = payable(owner());
         _owner.transfer(address(this).balance);
+    }
+
+
+    //Actions
+    function levelUp(uint256 _tamaId) public {
+        require(ownerOf(_tamaId) == msg.sender);
+
+        Tama storage tama = tamas[_tamaId];
+
+        tama.level++;
     }
 }
